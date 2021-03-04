@@ -17,6 +17,7 @@
 		F2125D5A25EFB2BB00660D65 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = F2125D5925EFB2BB00660D65 /* FirebaseDatabase */; };
 		F217E1D425F12E94002EDA0D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F217E1D325F12E94002EDA0D /* GoogleService-Info.plist */; };
 		F217E1D925F152B1002EDA0D /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1D825F152B1002EDA0D /* SplashScreenViewController.swift */; };
+		F217E1DC25F15523002EDA0D /* LoginAndSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1DB25F15523002EDA0D /* LoginAndSignUpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		F2125D4625EFAF5A00660D65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F217E1D325F12E94002EDA0D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F217E1D825F152B1002EDA0D /* SplashScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
+		F217E1DB25F15523002EDA0D /* LoginAndSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAndSignUpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				F2125D3C25EFAF5700660D65 /* RootViewController.swift */,
+				F217E1DB25F15523002EDA0D /* LoginAndSignUpViewController.swift */,
 				F217E1D825F152B1002EDA0D /* SplashScreenViewController.swift */,
 			);
 			path = Controllers;
@@ -172,6 +175,7 @@
 				F2125D3D25EFAF5700660D65 /* RootViewController.swift in Sources */,
 				F2125D3925EFAF5700660D65 /* AppDelegate.swift in Sources */,
 				F217E1D925F152B1002EDA0D /* SplashScreenViewController.swift in Sources */,
+				F217E1DC25F15523002EDA0D /* LoginAndSignUpViewController.swift in Sources */,
 				F2125D3B25EFAF5700660D65 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
