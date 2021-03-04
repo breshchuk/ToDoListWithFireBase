@@ -10,21 +10,28 @@ import Firebase
 
 class TasksViewController: UIViewController {
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .white
+        title = "Tasks"
+        let signOutButton = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOutButtonPressed(target:)))
+        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.systemFont(ofSize: 23)]
+        navigationItem.setLeftBarButton(signOutButton, animated: true)
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc private func signOutButtonPressed(target: UIBarButtonItem) {
+        DispatchQueue.global().async {
+            do {
+            try Auth.auth().signOut()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        SceneDelegate.shared.rootViewController.showLoginAndSignUpScreen()
+        
     }
-    */
 
 }

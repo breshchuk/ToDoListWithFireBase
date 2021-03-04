@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SplashScreenViewController: UIViewController {
 
@@ -23,9 +24,16 @@ class SplashScreenViewController: UIViewController {
     func loadDataFromFirebase() {
         activityIndicator.startAnimating()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) { [weak self] in
-            self?.activityIndicator.stopAnimating()
-            SceneDelegate.shared.rootViewController.showLoginAndSignUpScreen()
+        if Auth.auth().currentUser != nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) { [weak self] in
+                self?.activityIndicator.stopAnimating()
+                SceneDelegate.shared.rootViewController.showTasksScreen()
+            }
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) { [weak self] in
+                self?.activityIndicator.stopAnimating()
+                SceneDelegate.shared.rootViewController.showLoginAndSignUpScreen()
+            }
         }
     }
     

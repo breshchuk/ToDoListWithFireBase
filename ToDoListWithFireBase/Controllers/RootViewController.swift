@@ -39,6 +39,11 @@ class RootViewController: UIViewController {
         animatedFadeTransition(to: loginAndSignUpScreen)
     }
     
+    func showTasksScreen() {
+        let navController = UINavigationController(rootViewController: TasksViewController())
+        animatedFadeTransition(to: navController)
+    }
+    
     private func animatedFadeTransition(to new: UIViewController, complition: (()->Void)? = nil) {
         currentView.willMove(toParent: nil)
         addChild(new)
