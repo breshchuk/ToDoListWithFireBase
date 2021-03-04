@@ -19,6 +19,7 @@
 		F217E1D925F152B1002EDA0D /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1D825F152B1002EDA0D /* SplashScreenViewController.swift */; };
 		F217E1DC25F15523002EDA0D /* LoginAndSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1DB25F15523002EDA0D /* LoginAndSignUpViewController.swift */; };
 		F217E1E025F15C7E002EDA0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F217E1DF25F15C7E002EDA0D /* LaunchScreen.storyboard */; };
+		F217E1E525F16BB4002EDA0D /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1E425F16BB4002EDA0D /* UIButtonExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		F217E1D825F152B1002EDA0D /* SplashScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 		F217E1DB25F15523002EDA0D /* LoginAndSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAndSignUpViewController.swift; sourceTree = "<group>"; };
 		F217E1DF25F15C7E002EDA0D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F217E1E425F16BB4002EDA0D /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				F2125D3825EFAF5700660D65 /* AppDelegate.swift */,
 				F2125D3A25EFAF5700660D65 /* SceneDelegate.swift */,
 				F2125D4125EFAF5A00660D65 /* Assets.xcassets */,
+				F217E1E425F16BB4002EDA0D /* UIButtonExtension.swift */,
 			);
 			path = "Support files";
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				F217E1D925F152B1002EDA0D /* SplashScreenViewController.swift in Sources */,
 				F217E1DC25F15523002EDA0D /* LoginAndSignUpViewController.swift in Sources */,
 				F2125D3B25EFAF5700660D65 /* SceneDelegate.swift in Sources */,
+				F217E1E525F16BB4002EDA0D /* UIButtonExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
