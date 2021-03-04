@@ -20,6 +20,9 @@
 		F217E1DC25F15523002EDA0D /* LoginAndSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1DB25F15523002EDA0D /* LoginAndSignUpViewController.swift */; };
 		F217E1E025F15C7E002EDA0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F217E1DF25F15C7E002EDA0D /* LaunchScreen.storyboard */; };
 		F217E1E525F16BB4002EDA0D /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1E425F16BB4002EDA0D /* UIButtonExtension.swift */; };
+		F217E1E825F16CAF002EDA0D /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1E725F16CAF002EDA0D /* TasksViewController.swift */; };
+		F217E1EB25F16CD4002EDA0D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1EA25F16CD4002EDA0D /* User.swift */; };
+		F217E1F525F16D4C002EDA0D /* Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1F425F16D4C002EDA0D /* Tasks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,9 @@
 		F217E1DB25F15523002EDA0D /* LoginAndSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAndSignUpViewController.swift; sourceTree = "<group>"; };
 		F217E1DF25F15C7E002EDA0D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F217E1E425F16BB4002EDA0D /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
+		F217E1E725F16CAF002EDA0D /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
+		F217E1EA25F16CD4002EDA0D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F217E1F425F16D4C002EDA0D /* Tasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +76,7 @@
 		F2125D3725EFAF5700660D65 /* ToDoListWithFireBase */ = {
 			isa = PBXGroup;
 			children = (
+				F217E1F125F16D10002EDA0D /* Models */,
 				F2125D4D25EFB08800660D65 /* Support files */,
 				F2125D5025EFB0A100660D65 /* Controllers */,
 				F2125D4625EFAF5A00660D65 /* Info.plist */,
@@ -96,8 +103,18 @@
 				F2125D3C25EFAF5700660D65 /* RootViewController.swift */,
 				F217E1DB25F15523002EDA0D /* LoginAndSignUpViewController.swift */,
 				F217E1D825F152B1002EDA0D /* SplashScreenViewController.swift */,
+				F217E1E725F16CAF002EDA0D /* TasksViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		F217E1F125F16D10002EDA0D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F217E1EA25F16CD4002EDA0D /* User.swift */,
+				F217E1F425F16D4C002EDA0D /* Tasks.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,6 +199,9 @@
 				F2125D3D25EFAF5700660D65 /* RootViewController.swift in Sources */,
 				F2125D3925EFAF5700660D65 /* AppDelegate.swift in Sources */,
 				F217E1D925F152B1002EDA0D /* SplashScreenViewController.swift in Sources */,
+				F217E1E825F16CAF002EDA0D /* TasksViewController.swift in Sources */,
+				F217E1F525F16D4C002EDA0D /* Tasks.swift in Sources */,
+				F217E1EB25F16CD4002EDA0D /* User.swift in Sources */,
 				F217E1DC25F15523002EDA0D /* LoginAndSignUpViewController.swift in Sources */,
 				F2125D3B25EFAF5700660D65 /* SceneDelegate.swift in Sources */,
 				F217E1E525F16BB4002EDA0D /* UIButtonExtension.swift in Sources */,
