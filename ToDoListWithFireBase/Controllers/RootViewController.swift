@@ -27,21 +27,21 @@ class RootViewController: UIViewController {
         view.backgroundColor = .white
         
         addChild(currentView)
-        currentView.view.bounds = view.bounds
+        currentView.view.bounds = self.view.bounds
         currentView.didMove(toParent: self)
         view.addSubview(currentView.view)
     }
 
     
     func showLoginAndSignUpScreen() {
-        let LoginAndSignUpScreen = LoginAndSignUpViewController()
-        animatedFadeTransition(to: LoginAndSignUpScreen)
+        let loginAndSignUpScreen = LoginAndSignUpViewController()
+        animatedFadeTransition(to: loginAndSignUpScreen)
     }
     
     private func animatedFadeTransition(to new: UIViewController, complition: (()->Void)? = nil) {
         currentView.willMove(toParent: nil)
         addChild(new)
-        transition(from: self, to: new, duration: 0.3, options: .curveEaseOut) {
+        transition(from: currentView, to: new, duration: 0.3, options: .curveEaseIn) {
             self.currentView.removeFromParent()
             new.didMove(toParent: self)
             self.currentView = new

@@ -9,21 +9,20 @@ import UIKit
 
 class LoginAndSignUpViewController: UIViewController {
 
+    var textLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .white
+        
+        textLabel.frame = CGRect(x: 100, y: 200, width: 100, height: 23)
+        textLabel.text = "Regist\nration"
+        textLabel.numberOfLines = 5
+        textLabel.lineBreakMode = .byWordWrapping
+        view.addSubview(textLabel)
+        
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

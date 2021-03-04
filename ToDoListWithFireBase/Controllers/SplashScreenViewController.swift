@@ -9,17 +9,23 @@ import UIKit
 
 class SplashScreenViewController: UIViewController {
 
-    
+    let activityIndicator =  UIActivityIndicatorView(style: .large)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view = UIActivityIndicatorView(style: .large)
-        self.view.backgroundColor = UIColor(white: 0, alpha: 0.1)
+        view.backgroundColor = .white
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        activityIndicator.backgroundColor = UIColor(white: 0, alpha: 0.4)
+        view.addSubview(activityIndicator)
+        loadDataFromFirebase()
     }
     
     func loadDataFromFirebase() {
-        DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(3)) {
-           // SceneDelegate.shared.rootViewController
+        activityIndicator.startAnimating()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) { [weak self] in
+            self?.activityIndicator.stopAnimating()
+            SceneDelegate.shared.rootViewController.showLoginAndSignUpScreen()
         }
     }
     
