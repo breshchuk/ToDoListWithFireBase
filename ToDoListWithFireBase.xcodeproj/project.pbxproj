@@ -9,25 +9,25 @@
 /* Begin PBXBuildFile section */
 		F2125D3925EFAF5700660D65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2125D3825EFAF5700660D65 /* AppDelegate.swift */; };
 		F2125D3B25EFAF5700660D65 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2125D3A25EFAF5700660D65 /* SceneDelegate.swift */; };
-		F2125D3D25EFAF5700660D65 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2125D3C25EFAF5700660D65 /* ViewController.swift */; };
-		F2125D4025EFAF5700660D65 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2125D3E25EFAF5700660D65 /* Main.storyboard */; };
+		F2125D3D25EFAF5700660D65 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2125D3C25EFAF5700660D65 /* RootViewController.swift */; };
 		F2125D4225EFAF5A00660D65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2125D4125EFAF5A00660D65 /* Assets.xcassets */; };
-		F2125D4525EFAF5A00660D65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2125D4325EFAF5A00660D65 /* LaunchScreen.storyboard */; };
 		F2125D5425EFB2BB00660D65 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F2125D5325EFB2BB00660D65 /* FirebaseAnalytics */; };
 		F2125D5625EFB2BB00660D65 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F2125D5525EFB2BB00660D65 /* FirebaseAuth */; };
 		F2125D5825EFB2BB00660D65 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F2125D5725EFB2BB00660D65 /* FirebaseFirestore */; };
 		F2125D5A25EFB2BB00660D65 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = F2125D5925EFB2BB00660D65 /* FirebaseDatabase */; };
+		F217E1D425F12E94002EDA0D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F217E1D325F12E94002EDA0D /* GoogleService-Info.plist */; };
+		F217E1D925F152B1002EDA0D /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1D825F152B1002EDA0D /* SplashScreenViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F2125D3525EFAF5700660D65 /* ToDoListWithFireBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoListWithFireBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2125D3825EFAF5700660D65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F2125D3A25EFAF5700660D65 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F2125D3C25EFAF5700660D65 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		F2125D3F25EFAF5700660D65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F2125D3C25EFAF5700660D65 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		F2125D4125EFAF5A00660D65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F2125D4425EFAF5A00660D65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F2125D4625EFAF5A00660D65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F217E1D325F12E94002EDA0D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F217E1D825F152B1002EDA0D /* SplashScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +67,7 @@
 				F2125D4D25EFB08800660D65 /* Support files */,
 				F2125D5025EFB0A100660D65 /* Controllers */,
 				F2125D4625EFAF5A00660D65 /* Info.plist */,
+				F217E1D325F12E94002EDA0D /* GoogleService-Info.plist */,
 			);
 			path = ToDoListWithFireBase;
 			sourceTree = "<group>";
@@ -76,9 +77,7 @@
 			children = (
 				F2125D3825EFAF5700660D65 /* AppDelegate.swift */,
 				F2125D3A25EFAF5700660D65 /* SceneDelegate.swift */,
-				F2125D3E25EFAF5700660D65 /* Main.storyboard */,
 				F2125D4125EFAF5A00660D65 /* Assets.xcassets */,
-				F2125D4325EFAF5A00660D65 /* LaunchScreen.storyboard */,
 			);
 			path = "Support files";
 			sourceTree = "<group>";
@@ -86,7 +85,8 @@
 		F2125D5025EFB0A100660D65 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F2125D3C25EFAF5700660D65 /* ViewController.swift */,
+				F2125D3C25EFAF5700660D65 /* RootViewController.swift */,
+				F217E1D825F152B1002EDA0D /* SplashScreenViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -157,9 +157,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2125D4525EFAF5A00660D65 /* LaunchScreen.storyboard in Resources */,
 				F2125D4225EFAF5A00660D65 /* Assets.xcassets in Resources */,
-				F2125D4025EFAF5700660D65 /* Main.storyboard in Resources */,
+				F217E1D425F12E94002EDA0D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,32 +169,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2125D3D25EFAF5700660D65 /* ViewController.swift in Sources */,
+				F2125D3D25EFAF5700660D65 /* RootViewController.swift in Sources */,
 				F2125D3925EFAF5700660D65 /* AppDelegate.swift in Sources */,
+				F217E1D925F152B1002EDA0D /* SplashScreenViewController.swift in Sources */,
 				F2125D3B25EFAF5700660D65 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		F2125D3E25EFAF5700660D65 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F2125D3F25EFAF5700660D65 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		F2125D4325EFAF5A00660D65 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F2125D4425EFAF5A00660D65 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F2125D4725EFAF5A00660D65 /* Debug */ = {
