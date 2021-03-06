@@ -9,9 +9,8 @@ import UIKit
 import Firebase
 
 class LoginAndSignUpViewController: UIViewController {
-
-    var offsetY : CGFloat = 0
     
+    var haveAccountButton = UIButton()
     var registrationLabel = UILabel()
     var emailTextField = UITextField()
     var passTextField = UITextField()
@@ -19,35 +18,30 @@ class LoginAndSignUpViewController: UIViewController {
     var signInButton = UIButton()
     var loginButton = UIButton()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        //MARK: - UI(Registration Label)
+        //MARK: - UI(Labels)
         registrationLabel.frame = CGRect(x: 10, y: 50, width: 300, height: 60)
         registrationLabel.text = "Registration"
         registrationLabel.font = UIFont.systemFont(ofSize: 50)
         registrationLabel.shadowOffset = .init(width: 2, height: 0)
         registrationLabel.shadowColor = .black
         
+        haveAccountButton.frame = CGRect(x: 40, y: 150, width: 300, height: 23)
+        haveAccountButton.setTitle("Already have account?", for: .normal)
+        haveAccountButton.setTitleColor(.systemBlue, for: .normal)
+        haveAccountButton.addTarget(self, action: #selector(haveAccountButtonTapped(sender:)), for: .touchUpInside)
+        
+        
         //MARK: - UI(Text fields)
         emailTextField.frame = CGRect(x: 40, y: 300, width: view.frame.width - 80, height: 40)
-        emailTextField.placeholder = "Email"
-        emailTextField.borderStyle = .roundedRect
-        emailTextField.autocapitalizationType = .none
-        emailTextField.autocorrectionType = .no
-        emailTextField.keyboardType = .emailAddress
-        emailTextField.returnKeyType = .next
-        emailTextField.delegate = self
+        configureEmailTextField(textField: emailTextField)
         
         passTextField.frame = CGRect(x: 40, y: 380, width: view.frame.width - 80, height: 40)
-        passTextField.placeholder = "Password"
-        passTextField.isSecureTextEntry = true
-        passTextField.borderStyle = .roundedRect
-        passTextField.autocapitalizationType = .none
-        passTextField.autocorrectionType = .no
-        passTextField.returnKeyType = .next
-        passTextField.delegate = self
+        configurePassTextField(textField: passTextField)
      
         
         secondPassTextField.frame = CGRect(x: 40, y: 460, width: view.frame.width - 80, height: 40)
@@ -74,6 +68,7 @@ class LoginAndSignUpViewController: UIViewController {
         view.addSubview(passTextField)
         view.addSubview(secondPassTextField)
         view.addSubview(signInButton)
+        view.addSubview(haveAccountButton)
         
         //MARK: - NSNotifications
         NotificationCenter.default.addObserver(self, selector: #selector(kbWillShowAction(notification:)), name: UITextField.keyboardWillShowNotification, object: nil)
@@ -84,6 +79,27 @@ class LoginAndSignUpViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
+    
+    func configureEmailTextField(textField: UITextField) {
+        textField.placeholder = "Email"
+        textField.borderStyle = .roundedRect
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
+        textField.keyboardType = .emailAddress
+        textField.returnKeyType = .next
+        textField.delegate = self
+    }
+    
+    func configurePassTextField(textField: UITextField) {
+        textField.placeholder = "Password"
+        textField.isSecureTextEntry = true
+        textField.borderStyle = .roundedRect
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
+        textField.returnKeyType = .next
+        textField.delegate = self
+    }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -120,12 +136,57 @@ class LoginAndSignUpViewController: UIViewController {
             sender.pulsate()
         }
         if let email = emailTextField.text , let pass = passTextField.text ,let checkPass = secondPassTextField.text, pass != "" && email.contains("@") && pass == checkPass {
-            Auth.auth().createUser(withEmail: email, password: pass) {  (authResult, error) in
+            Auth.auth().createUser(withEmail: email, password: pass) { [weak self] (authResult, error) in
+                if let error = error {
+                    let alertController = UIAlertController(title: "Error", message: "\(error.localizedDescription)", preferredStyle: .actionSheet)
+                    let okButton = UIAlertAction(title: "OK", style: .default)
+                    alertController.addAction(okButton)
+                    self?.present(alertController, animated: true)
+                } else {
                 SceneDelegate.shared.rootViewController.showTasksScreen()
+                }
             }
         } else {
             
         }
+    }
+    
+    
+    @objc private func haveAccountButtonTapped(sender: UIButton) {
+        let alertController = UIAlertController.init(title: "Sign in", message: "Enter your data", preferredStyle: .alert)
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel) { [weak self] (button) in
+            self?.dismissKeyboard()
+        }
+        let signInButton = UIAlertAction(title: "Sign in", style: .default) { [weak self] (button) in
+            if var textFields = alertController.textFields , let email = textFields.removeFirst().text , let pass = textFields.removeFirst().text, email.contains("@") && pass.count >= 6 && pass != ""  {
+                Auth.auth().signIn(withEmail: email, password: pass) { (authDataResul, error) in
+                    if let error = error {
+                        alertController.title = "Wrong Data"
+                        alertController.message = error.localizedDescription
+                        self?.present(alertController, animated: true)
+                    } else {
+                        SceneDelegate.shared.rootViewController.showTasksScreen()
+                    }
+                }
+            } else {
+                alertController.title = "Wrong Data"
+                alertController.message = "Invalid email or password"
+                self?.present(alertController, animated: true)
+            }
+        }
+        
+        alertController.addTextField { [weak self] (emailTextField) in
+            self?.configureEmailTextField(textField: emailTextField)
+        }
+        
+        alertController.addTextField { [weak self] (passTextField) in
+            self?.configurePassTextField(textField: passTextField)
+        }
+        alertController.addAction(cancelButton)
+        alertController.addAction(signInButton)
+        
+        self.present(alertController, animated: true)
     }
     
 
@@ -136,7 +197,7 @@ extension LoginAndSignUpViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case emailTextField:
-//            emailTextField.resignFirstResponder()
+            emailTextField.resignFirstResponder()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 self?.passTextField.becomeFirstResponder()
             }
