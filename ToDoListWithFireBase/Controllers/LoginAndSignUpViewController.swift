@@ -10,6 +10,8 @@ import Firebase
 
 class LoginAndSignUpViewController: UIViewController {
 
+    var offsetY : CGFloat = 0
+    
     var registrationLabel = UILabel()
     var emailTextField = UITextField()
     var passTextField = UITextField()
@@ -54,7 +56,7 @@ class LoginAndSignUpViewController: UIViewController {
         secondPassTextField.borderStyle = .roundedRect
         secondPassTextField.autocapitalizationType = .none
         secondPassTextField.autocorrectionType = .no
-        secondPassTextField.returnKeyType = .join
+        secondPassTextField.returnKeyType = .done
         secondPassTextField.delegate = self
         
         //MARK: - UI(Buttons)
@@ -72,6 +74,45 @@ class LoginAndSignUpViewController: UIViewController {
         view.addSubview(passTextField)
         view.addSubview(secondPassTextField)
         view.addSubview(signInButton)
+        
+        //MARK: - NSNotifications
+        NotificationCenter.default.addObserver(self, selector: #selector(kbWillShowAction(notification:)), name: UITextField.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(kbWillHideAction(notification:)), name: UITextField.keyboardWillHideNotification, object: nil)
+        
+        //MARK: Tap Gesture
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+        
+    }
+    
+    @objc private func dismissKeyboard() {
+        if self.view.frame.origin.y != 0 {
+        self.view.frame.origin.y = 0
+        view.endEditing(true)
+        }
+    }
+    
+    @objc private func kbWillShowAction(notification: NSNotification) {
+        if self.view.frame.origin.y == 0 {
+        if let userInfo = notification.userInfo, let kbFrame = userInfo[UITextField.keyboardFrameEndUserInfoKey] as? CGRect {
+            self.view.frame.origin.y = view.frame.origin.y - kbFrame.height
+        }
+        }
+    }
+        
+    
+    @objc private func kbWillHideAction(notification: NSNotification) {
+        if self.view.isFirstResponder {
+        if let userInfo = notification.userInfo, let kbFrame = userInfo[UITextField.keyboardFrameEndUserInfoKey] as? CGRect {
+            self.view.frame.origin.y = view.frame.origin.y + kbFrame.maxY
+        }
+        }
     }
     
     @objc private func signInButtonTapped(sender: UIButton? = nil) {
@@ -95,7 +136,7 @@ extension LoginAndSignUpViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case emailTextField:
-            emailTextField.resignFirstResponder()
+//            emailTextField.resignFirstResponder()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 self?.passTextField.becomeFirstResponder()
             }
@@ -111,4 +152,6 @@ extension LoginAndSignUpViewController: UITextFieldDelegate {
         }
         return true
     }
+    
+    
 }
