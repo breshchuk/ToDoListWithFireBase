@@ -9,10 +9,10 @@ import Foundation
 import Firebase
 
 struct Tasks {
-    private let userID : String
-    private let title: String
-    private var ref : DatabaseReference?
-    private var completed = false
+    let userID : String
+    let title: String
+    var ref : DatabaseReference?
+    var completed = false
     
     init(snapshot: DataSnapshot) {
         let value = snapshot.value as! [String: AnyObject]
@@ -28,4 +28,7 @@ struct Tasks {
         self.ref = nil
     }
     
+    func convertToDict() -> Any {
+        return ["title": title,"userid": userID,"completed": completed ]
+    }
 }

@@ -9,8 +9,8 @@ import Foundation
 import Firebase
 
 struct LocalUser {
-    private let id: String
-    private let email : String
+    let id: String
+    let email : String
     
     init(user: User) {
         self.id = user.uid
