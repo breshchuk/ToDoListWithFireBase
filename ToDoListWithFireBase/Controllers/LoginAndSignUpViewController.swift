@@ -10,18 +10,21 @@ import Firebase
 
 class LoginAndSignUpViewController: UIViewController {
     
+    private var ref: DatabaseReference!
     private var haveAccountButton = UIButton()
     private var registrationLabel = UILabel()
     private var emailTextField = UITextField()
     private var passTextField = UITextField()
     private var secondPassTextField = UITextField()
-    private var signInButton = UIButton()
+    private var registerButton = UIButton()
     private var loginButton = UIButton()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        ref = Database.database().reference().child("users")
         
         //MARK: - UI(Labels)
         registrationLabel.frame = CGRect(x: 10, y: 50, width: 300, height: 60)
@@ -54,11 +57,11 @@ class LoginAndSignUpViewController: UIViewController {
         secondPassTextField.delegate = self
         
         //MARK: - UI(Buttons)
-        signInButton.frame = CGRect(x: 80, y: 540, width: view.frame.width - 160, height: 40)
-        signInButton.setTitle("Sign In", for: .normal)
-        signInButton.backgroundColor = .blue
-        signInButton.setTitleColor(.white, for: .normal)
-        signInButton.addTarget(self, action: #selector(signInButtonTapped(sender:)), for: .touchUpInside)
+        registerButton.frame = CGRect(x: 80, y: 540, width: view.frame.width - 160, height: 40)
+        registerButton.setTitle("Register", for: .normal)
+        registerButton.backgroundColor = .blue
+        registerButton.setTitleColor(.white, for: .normal)
+        registerButton.addTarget(self, action: #selector(registerButtonTapped(sender:)), for: .touchUpInside)
         
         
         
@@ -67,7 +70,7 @@ class LoginAndSignUpViewController: UIViewController {
         view.addSubview(emailTextField)
         view.addSubview(passTextField)
         view.addSubview(secondPassTextField)
-        view.addSubview(signInButton)
+        view.addSubview(registerButton)
         view.addSubview(haveAccountButton)
         
         //MARK: - NSNotifications
@@ -131,11 +134,11 @@ class LoginAndSignUpViewController: UIViewController {
         }
     }
     
-    @objc private func signInButtonTapped(sender: UIButton? = nil) {
+    @objc private func registerButtonTapped(sender: UIButton? = nil) {
         if let sender = sender {
             sender.pulsate()
         }
-        if let email = emailTextField.text , let pass = passTextField.text ,let checkPass = secondPassTextField.text, pass != "" && email.contains("@") && pass == checkPass {
+        if let email = emailTextField.text , let pass = passTextField.text ,let checkPass = secondPassTextField.text, pass == checkPass {
             Auth.auth().createUser(withEmail: email, password: pass) { [weak self] (authResult, error) in
                 if let error = error {
                     let alertController = UIAlertController(title: "Error", message: "\(error.localizedDescription)", preferredStyle: .actionSheet)
@@ -143,11 +146,17 @@ class LoginAndSignUpViewController: UIViewController {
                     alertController.addAction(okButton)
                     self?.present(alertController, animated: true)
                 } else {
+                self?.present(UIAlertController(title: "Successful", message: nil, preferredStyle: .actionSheet), animated: true)
+                let userRef = self?.ref.child(authResult!.user.uid)
+                userRef?.setValue(["email": authResult!.user.email])
                 SceneDelegate.shared.rootViewController.showTasksScreen()
                 }
             }
         } else {
-            
+            let alertController = UIAlertController(title: "Error", message: "Passwords aren't similar", preferredStyle: .actionSheet)
+            let okButton = UIAlertAction(title: "OK", style: .default)
+            alertController.addAction(okButton)
+            self.present(alertController, animated: true)
         }
     }
     
@@ -207,7 +216,7 @@ extension LoginAndSignUpViewController: UITextFieldDelegate {
                 self?.secondPassTextField.becomeFirstResponder()
             }
         case secondPassTextField:
-            signInButtonTapped()
+            registerButtonTapped()
         default:
             break
         }
