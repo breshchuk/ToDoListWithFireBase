@@ -30,6 +30,10 @@ class TasksViewController: UIViewController {
         tableView.center = view.center
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        
+        
+        view.addSubview(tableView)
     }
     
 
@@ -56,9 +60,12 @@ extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
       return 1
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier,for: indexPath)
+        
+        cell.textLabel?.text = "\(indexPath.row)"
         
         return cell
+    
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
