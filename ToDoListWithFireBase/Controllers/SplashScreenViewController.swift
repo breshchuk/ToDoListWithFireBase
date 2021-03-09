@@ -10,7 +10,7 @@ import Firebase
 
 class SplashScreenViewController: UIViewController {
 
-    let activityIndicator =  UIActivityIndicatorView(style: .large)
+    private let activityIndicator =  UIActivityIndicatorView(style: .large)
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -10,7 +10,7 @@ import Firebase
 
 class RootViewController: UIViewController {
     
-    var currentView: UIViewController
+    private var currentView: UIViewController
     
     init() {
         self.currentView = SplashScreenViewController()

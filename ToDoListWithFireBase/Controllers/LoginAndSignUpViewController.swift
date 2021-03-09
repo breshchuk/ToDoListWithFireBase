@@ -10,13 +10,13 @@ import Firebase
 
 class LoginAndSignUpViewController: UIViewController {
     
-    var haveAccountButton = UIButton()
-    var registrationLabel = UILabel()
-    var emailTextField = UITextField()
-    var passTextField = UITextField()
-    var secondPassTextField = UITextField()
-    var signInButton = UIButton()
-    var loginButton = UIButton()
+    private var haveAccountButton = UIButton()
+    private var registrationLabel = UILabel()
+    private var emailTextField = UITextField()
+    private var passTextField = UITextField()
+    private var secondPassTextField = UITextField()
+    private var signInButton = UIButton()
+    private var loginButton = UIButton()
     
     
     override func viewDidLoad() {
