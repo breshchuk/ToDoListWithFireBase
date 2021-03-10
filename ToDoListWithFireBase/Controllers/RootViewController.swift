@@ -36,7 +36,7 @@ class RootViewController: UIViewController {
     
     func showLoginAndSignUpScreen() {
         let loginAndSignUpScreen = LoginAndSignUpViewController()
-        animatedFadeTransition(to: loginAndSignUpScreen)
+        animatedDissmissTransition(to: loginAndSignUpScreen)
     }
     
     func showTasksScreen() {
@@ -47,13 +47,29 @@ class RootViewController: UIViewController {
     private func animatedFadeTransition(to new: UIViewController, complition: (()->Void)? = nil) {
         currentView.willMove(toParent: nil)
         addChild(new)
-        transition(from: currentView, to: new, duration: 0.3, options: .curveEaseIn) {
-            self.currentView.removeFromParent()
+        transition(from: currentView, to: new, duration: 0.3, options: [], animations: {
+            
+        }) { [weak self] completed in
+            self?.currentView.removeFromParent()
             new.didMove(toParent: self)
-            self.currentView = new
+            self?.currentView = new
             complition?()
         }
 
+    }
+    
+    private func animatedDissmissTransition(to new: UIViewController, complition: (()->Void)? = nil) {
+        currentView.willMove(toParent: nil)
+        addChild(new)
+        transition(from: currentView, to: new, duration: 0.3, options: [.curveEaseIn,.curveLinear],animations:  {
+            new.view.frame = self.view.bounds
+        }) { [weak self] completed in
+            self?.currentView.removeFromParent()
+            new.didMove(toParent: self)
+            self?.currentView = new
+            complition?()
+        }
+    
     }
 
 }

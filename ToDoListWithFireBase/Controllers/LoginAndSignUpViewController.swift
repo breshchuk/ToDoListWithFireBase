@@ -33,11 +33,6 @@ class LoginAndSignUpViewController: UIViewController {
         registrationLabel.shadowOffset = .init(width: 2, height: 0)
         registrationLabel.shadowColor = .black
         
-        haveAccountButton.frame = CGRect(x: 40, y: 150, width: 300, height: 23)
-        haveAccountButton.setTitle("Already have account?", for: .normal)
-        haveAccountButton.setTitleColor(.systemBlue, for: .normal)
-        haveAccountButton.addTarget(self, action: #selector(haveAccountButtonTapped(sender:)), for: .touchUpInside)
-        
         
         //MARK: - UI(Text fields)
         emailTextField.frame = CGRect(x: 40, y: 300, width: view.frame.width - 80, height: 40)
@@ -62,6 +57,11 @@ class LoginAndSignUpViewController: UIViewController {
         registerButton.backgroundColor = .blue
         registerButton.setTitleColor(.white, for: .normal)
         registerButton.addTarget(self, action: #selector(registerButtonTapped(sender:)), for: .touchUpInside)
+        
+        haveAccountButton.frame = CGRect(x: 40, y: 160, width: 300, height: 23)
+        haveAccountButton.setTitle("Already have account?", for: .normal)
+        haveAccountButton.setTitleColor(.systemBlue, for: .normal)
+        haveAccountButton.addTarget(self, action: #selector(haveAccountButtonTapped(sender:)), for: .touchUpInside)
         
         
         
@@ -146,10 +146,14 @@ class LoginAndSignUpViewController: UIViewController {
                     alertController.addAction(okButton)
                     self?.present(alertController, animated: true)
                 } else {
-                self?.present(UIAlertController(title: "Successful", message: nil, preferredStyle: .actionSheet), animated: true)
+                    let successfulAlert = UIAlertController(title: "Successful", message: nil, preferredStyle: .actionSheet)
+                    self?.present(successfulAlert, animated: true)
                 let userRef = self?.ref.child(authResult!.user.uid)
                 userRef?.setValue(["email": authResult!.user.email])
-                SceneDelegate.shared.rootViewController.showTasksScreen()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        successfulAlert.dismiss(animated: true)
+                        SceneDelegate.shared.rootViewController.showTasksScreen()
+                    }
                 }
             }
         } else {
@@ -175,7 +179,12 @@ class LoginAndSignUpViewController: UIViewController {
                         alertController.message = error.localizedDescription
                         self?.present(alertController, animated: true)
                     } else {
-                        SceneDelegate.shared.rootViewController.showTasksScreen()
+                        let successfulAlert = UIAlertController(title: "Successful", message: nil, preferredStyle: .actionSheet)
+                        self?.present(successfulAlert, animated: true)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            successfulAlert.dismiss(animated: true)
+                            SceneDelegate.shared.rootViewController.showTasksScreen()
+                        }
                     }
                 }
             } else {

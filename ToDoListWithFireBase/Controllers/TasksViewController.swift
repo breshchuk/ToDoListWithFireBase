@@ -101,6 +101,7 @@ class TasksViewController: UIViewController {
         configureNavigationItemButtons(false)
         UIView.animate(withDuration: 1) { [weak self] in
             self?.textView.frame = CGRect(x: 30, y: 100, width: (self?.view.frame.width)! - 60, height: (self?.view.frame.height)! - 150)
+            self?.textView.font = UIFont.systemFont(ofSize: 18)
             self?.textView.backgroundColor = .yellow
             self?.textView.keyboardType = .default
             self?.textView.isEditable = true
@@ -117,6 +118,7 @@ class TasksViewController: UIViewController {
             let taskRef = self.ref.child(task.title.lowercased())
             taskRef.setValue(task.convertToDict())
             textView.removeFromSuperview()
+            textView.text = ""
         } else {
             textView.removeFromSuperview()
             textView.text = ""
