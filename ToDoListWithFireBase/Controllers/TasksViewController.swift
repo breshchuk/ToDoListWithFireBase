@@ -21,7 +21,7 @@ class TasksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
          
-        DispatchQueue.main.async { [weak self] in
+        DispatchQueue.global().async(flags: .barrier) { [weak self] in
             guard let currentUser = Auth.auth().currentUser else {return}
             self?.user = LocalUser(user: currentUser)
             self?.ref = Database.database().reference(withPath: "users").child((self?.user.id)!).child("tasks")
@@ -29,16 +29,12 @@ class TasksViewController: UIViewController {
         
         view.backgroundColor = .white
         title = "Tasks"
+        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.systemFont(ofSize: 23)]
+        
         
         //MARK: - Nav Controller Buttons
-        let signOutButton = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOutButtonPressed(target:)))
-        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.systemFont(ofSize: 23)]
-        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonPressed(target:)))
-        navigationItem.setLeftBarButtonItems([signOutButton,saveButton], animated: true)
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed(target:)))
-        navigationItem.setRightBarButton(addButton, animated: true)
-        
-        
+        configureNavigationItemButtons(true)
+       
         //MARK: - Table View
         tableView.frame = view.frame
         tableView.center = view.center
@@ -80,10 +76,32 @@ class TasksViewController: UIViewController {
         SceneDelegate.shared.rootViewController.showLoginAndSignUpScreen()
         
     }
+    
+    private func configureNavigationItemButtons(_ whichButtons: Bool) {
+        if whichButtons {
+            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn) {
+                [weak self] in
+                let signOutButton = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(self?.signOutButtonPressed(target:)))
+                self?.navigationItem.setLeftBarButton(signOutButton, animated: true)
+                let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self?.addButtonPressed(target:)))
+                self?.navigationItem.setRightBarButton(addButton, animated: true)
+            }
+        } else {
+            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn) {
+                [weak self] in
+                let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(self?.saveButtonPressed(target:)))
+                self?.navigationItem.setRightBarButton(saveButton, animated: true)
+                let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self?.cancelButtonPressed(target:)))
+                self?.navigationItem.setLeftBarButton(cancelButton, animated: true)
+            }
+        }
+    }
 
     @objc private func addButtonPressed(target: UIBarButtonItem) {
+        configureNavigationItemButtons(false)
         UIView.animate(withDuration: 1) { [weak self] in
-            self?.textView.frame = CGRect(x: 60, y: 100, width: (self?.view.frame.width)! - 40, height: (self?.view.frame.height)! - 100)
+            self?.textView.frame = CGRect(x: 30, y: 100, width: (self?.view.frame.width)! - 60, height: (self?.view.frame.height)! - 150)
+            self?.textView.backgroundColor = .yellow
             self?.textView.keyboardType = .default
             self?.textView.isEditable = true
             self?.textView.isScrollEnabled = true
@@ -99,11 +117,22 @@ class TasksViewController: UIViewController {
             let taskRef = self.ref.child(task.title.lowercased())
             taskRef.setValue(task.convertToDict())
             textView.removeFromSuperview()
-        } else if textView.isFirstResponder {
+        } else {
             textView.removeFromSuperview()
+            textView.text = ""
+        }
+        configureNavigationItemButtons(true)
+    }
+    
+    @objc private func cancelButtonPressed(target: UIBarButtonItem) {
+        configureNavigationItemButtons(true)
+        UIView.animate(withDuration: 1) { [weak self] in
+            self?.textView.removeFromSuperview()
+            self?.textView.text = ""
         }
     }
 }
+
 
 extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -116,19 +145,35 @@ extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier,for: indexPath)
         
-        cell.textLabel?.text = tasks[indexPath.row].title
+        let task = tasks[indexPath.row]
+        cell.textLabel?.text = task.title
+        toggle(cell, IsCompleted: task.completed)
         
         return cell
     
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        ref = Database.database().reference()
-        let textView = UITextView()
-        textView.frame = self.view.frame
-        textView.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
-        view.addSubview(textView)
-        
+        let task = tasks[indexPath.row]
+        let IsCompleted = !task.completed
+        task.ref?.updateChildValues(["completed": IsCompleted])
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        toggle(cell, IsCompleted: IsCompleted)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let task = tasks[indexPath.row]
+            task.ref?.removeValue()
+        }
+    }
+    
+    func toggle(_ cell: UITableViewCell,IsCompleted: Bool) {
+        cell.accessoryType = IsCompleted ? .checkmark : .none
     }
     
     
