@@ -216,14 +216,10 @@ extension LoginAndSignUpViewController: UITextFieldDelegate {
         switch textField {
         case emailTextField:
             emailTextField.resignFirstResponder()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.passTextField.becomeFirstResponder()
-            }
+            passTextField.becomeFirstResponder()
         case passTextField:
             passTextField.resignFirstResponder()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.secondPassTextField.becomeFirstResponder()
-            }
+            secondPassTextField.becomeFirstResponder()
         case secondPassTextField:
             registerButtonTapped()
         default:
