@@ -16,4 +16,9 @@ struct LocalUser {
         self.id = user.uid
         self.email = user.email!
     }
+    
+    init(data: [String : Any]) {
+        id = data["id"] as! String
+        email = data["email"] as! String
+    }
 }
