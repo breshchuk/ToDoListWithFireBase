@@ -26,6 +26,8 @@
 		F217E1F525F16D4C002EDA0D /* Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1F425F16D4C002EDA0D /* Tasks.swift */; };
 		F23120D62618EAD10019FB7A /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = F23120D52618EAD10019FB7A /* FacebookCore */; };
 		F23120D82618EAD10019FB7A /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = F23120D72618EAD10019FB7A /* FacebookLogin */; };
+		F29F50B52619FA07003321A5 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29F50B42619FA07003321A5 /* UserViewController.swift */; };
+		F29F50B82619FFAF003321A5 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29F50B72619FFAF003321A5 /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		F217E1E725F16CAF002EDA0D /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		F217E1EA25F16CD4002EDA0D /* LocalUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUser.swift; sourceTree = "<group>"; };
 		F217E1F425F16D4C002EDA0D /* Tasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasks.swift; sourceTree = "<group>"; };
+		F29F50B42619FA07003321A5 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		F29F50B72619FFAF003321A5 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +136,8 @@
 				F217E1DB25F15523002EDA0D /* LoginAndSignUpViewController.swift */,
 				F217E1D825F152B1002EDA0D /* SplashScreenViewController.swift */,
 				F217E1E725F16CAF002EDA0D /* TasksViewController.swift */,
+				F29F50B42619FA07003321A5 /* UserViewController.swift */,
+				F29F50B72619FFAF003321A5 /* TabBarViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -290,6 +296,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2125D3D25EFAF5700660D65 /* RootViewController.swift in Sources */,
+				F29F50B52619FA07003321A5 /* UserViewController.swift in Sources */,
+				F29F50B82619FFAF003321A5 /* TabBarViewController.swift in Sources */,
 				F2125D3925EFAF5700660D65 /* AppDelegate.swift in Sources */,
 				F217E1D925F152B1002EDA0D /* SplashScreenViewController.swift in Sources */,
 				F217E1E825F16CAF002EDA0D /* TasksViewController.swift in Sources */,

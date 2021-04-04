@@ -72,6 +72,7 @@ class TasksViewController: UIViewController {
         DispatchQueue.global().async {
             do {
             LoginManager().logOut()
+            GIDSignIn.sharedInstance()?.signOut()
             try Auth.auth().signOut()
             } catch {
                 print(error.localizedDescription)

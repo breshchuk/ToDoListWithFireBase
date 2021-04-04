@@ -40,8 +40,9 @@ class RootViewController: UIViewController {
     }
     
     func showTasksScreen() {
-        let navController = UINavigationController(rootViewController: TasksViewController())
-        animatedFadeTransition(to: navController)
+        let tabBarViewController = TabBarViewController()
+//        let navController = UINavigationController(rootViewController: tabBarViewController)
+        animatedFadeTransition(to: tabBarViewController)
     }
     
     private func animatedFadeTransition(to new: UIViewController, complition: (()->Void)? = nil) {

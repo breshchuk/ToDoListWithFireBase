@@ -43,12 +43,19 @@ class LoginAndSignUpViewController: UIViewController {
         stackView.axis = .vertical
         return stackView
     }()
+    lazy private var googleButton: GIDSignInButton = {
+        let loginButton = GIDSignInButton()
+        return loginButton
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
        // view.translatesAutoresizingMaskIntoConstraints = false
         
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.delegate = self
         ref = Database.database().reference().child("users")
         
         //MARK: - UI(Labels)
@@ -98,8 +105,8 @@ class LoginAndSignUpViewController: UIViewController {
         
         
         registerButtonsStackView.addArrangedSubview(registerButton)
+        registerButtonsStackView.addArrangedSubview(googleButton)
         registerButtonsStackView.addArrangedSubview(fbLoginButton)
-        
         
         //MARK: - Add subviews
         view.addSubview(registrationLabel)
@@ -282,10 +289,25 @@ extension LoginAndSignUpViewController: UITextFieldDelegate {
         return true
     }
     
-    
+    private func signInWithFirebase(credential: AuthCredential,complitionHandler: @escaping ((Result<Any, Error>) -> Void)) {
+        Auth.auth().signIn(with: credential) { [weak self] (FIRresult, error) in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                complitionHandler(.failure(error))
+                return
+            }
+            guard let user = FIRresult?.user else { return }
+            if FIRresult!.additionalUserInfo!.isNewUser {
+                let user = LocalUser(user: user)
+                self?.ref.child(user.id).setValue(["email": user.email])
+            }
+            complitionHandler(.success(user))
+    }
+  }
 }
 
 extension LoginAndSignUpViewController: LoginButtonDelegate {
+    
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
         
     }
@@ -302,26 +324,21 @@ extension LoginAndSignUpViewController: LoginButtonDelegate {
         
         guard let accessToken = result?.token?.tokenString else {return}
         let credential = FacebookAuthProvider.credential(withAccessToken: accessToken)
-        
-        Auth.auth().signIn(with: credential) { [weak self] (FIRresult, error) in
-            if let error = error {
-                debugPrint(error.localizedDescription)
-                return
+
+        signInWithFirebase(credential: credential) { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(_):
+                DispatchQueue.main.async {
+                    SceneDelegate.shared.rootViewController.showTasksScreen()
+                }
             }
-            guard let user = FIRresult?.user else { return }
-            if FIRresult!.additionalUserInfo!.isNewUser {
-                let user = LocalUser(user: user)
-                self?.ref.child(user.id).setValue(["email": user.email])
-            }
-            DispatchQueue.main.async {
-                SceneDelegate.shared.rootViewController.showTasksScreen()
-            }
+        }
 //            if let _ = result {
 //                self?.saveFBData()
 //            }
         }
-        
-    }
     
     private func saveFBData() {
         
@@ -340,6 +357,25 @@ extension LoginAndSignUpViewController: LoginButtonDelegate {
 
 extension LoginAndSignUpViewController: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        }
+        
+        guard let auth = user.authentication else {return}
+        let credential = GoogleAuthProvider.credential(withIDToken: auth.idToken, accessToken: auth.accessToken)
+        
+        signInWithFirebase(credential: credential) { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(_):
+                DispatchQueue.main.async {
+                    SceneDelegate.shared.rootViewController.showTasksScreen()
+                }
+            }
+        }
+        
         
     }
     
