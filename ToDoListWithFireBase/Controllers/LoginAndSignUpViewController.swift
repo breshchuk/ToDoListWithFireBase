@@ -7,22 +7,46 @@
 
 import UIKit
 import Firebase
+import FBSDKLoginKit
 
 class LoginAndSignUpViewController: UIViewController {
     
     private var ref: DatabaseReference!
-    private var haveAccountButton = UIButton()
+    private var haveAccountButton : UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     private var registrationLabel = UILabel()
     private var emailTextField = UITextField()
     private var passTextField = UITextField()
     private var secondPassTextField = UITextField()
     private var registerButton = UIButton()
     private var loginButton = UIButton()
-    
+    private var textFieldsStackView : UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    private lazy var fbLoginButton : FBLoginButton = {
+        let button = FBLoginButton()
+        button.delegate = self
+        button.permissions = ["email","public_profile"]
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    private var registerButtonsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 10
+        stackView.axis = .vertical
+        return stackView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+       // view.translatesAutoresizingMaskIntoConstraints = false
         
         ref = Database.database().reference().child("users")
         
@@ -33,16 +57,25 @@ class LoginAndSignUpViewController: UIViewController {
         registrationLabel.shadowOffset = .init(width: 2, height: 0)
         registrationLabel.shadowColor = .black
         
+        textFieldsStackView.addArrangedSubview(emailTextField)
+        textFieldsStackView.addArrangedSubview(passTextField)
+        textFieldsStackView.addArrangedSubview(secondPassTextField)
+        textFieldsStackView.spacing = 20
+        textFieldsStackView.axis = .vertical
+        
+        for view in textFieldsStackView.subviews {
+            view.translatesAutoresizingMaskIntoConstraints = false
+            view.widthAnchor.constraint(equalToConstant: self.view.bounds.width - 60).isActive = true
+        }
+        
+        for view in registerButtonsStackView.subviews {
+            view.widthAnchor.constraint(equalToConstant: self.view.bounds.width - 100).isActive = true
+        }
         
         //MARK: - UI(Text fields)
-        emailTextField.frame = CGRect(x: 40, y: 300, width: view.frame.width - 80, height: 40)
         configureEmailTextField(textField: emailTextField)
-        
-        passTextField.frame = CGRect(x: 40, y: 380, width: view.frame.width - 80, height: 40)
         configurePassTextField(textField: passTextField)
-     
-        
-        secondPassTextField.frame = CGRect(x: 40, y: 460, width: view.frame.width - 80, height: 40)
+       
         secondPassTextField.placeholder = "Repeat password"
         secondPassTextField.isSecureTextEntry = true
         secondPassTextField.borderStyle = .roundedRect
@@ -52,26 +85,26 @@ class LoginAndSignUpViewController: UIViewController {
         secondPassTextField.delegate = self
         
         //MARK: - UI(Buttons)
-        registerButton.frame = CGRect(x: 80, y: 540, width: view.frame.width - 160, height: 40)
         registerButton.setTitle("Register", for: .normal)
         registerButton.backgroundColor = .blue
         registerButton.setTitleColor(.white, for: .normal)
         registerButton.addTarget(self, action: #selector(registerButtonTapped(sender:)), for: .touchUpInside)
+        registerButton.translatesAutoresizingMaskIntoConstraints = false
         
-        haveAccountButton.frame = CGRect(x: 40, y: 160, width: 300, height: 23)
         haveAccountButton.setTitle("Already have account?", for: .normal)
         haveAccountButton.setTitleColor(.systemBlue, for: .normal)
         haveAccountButton.addTarget(self, action: #selector(haveAccountButtonTapped(sender:)), for: .touchUpInside)
         
         
+        registerButtonsStackView.addArrangedSubview(registerButton)
+        registerButtonsStackView.addArrangedSubview(fbLoginButton)
+        
         
         //MARK: - Add subviews
         view.addSubview(registrationLabel)
-        view.addSubview(emailTextField)
-        view.addSubview(passTextField)
-        view.addSubview(secondPassTextField)
-        view.addSubview(registerButton)
         view.addSubview(haveAccountButton)
+        view.addSubview(textFieldsStackView)
+        view.addSubview(registerButtonsStackView)
         
         //MARK: - NSNotifications
         NotificationCenter.default.addObserver(self, selector: #selector(kbWillShowAction(notification:)), name: UITextField.keyboardWillShowNotification, object: nil)
@@ -81,6 +114,26 @@ class LoginAndSignUpViewController: UIViewController {
         //MARK: Tap Gesture
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
+        
+    }
+    
+    //MARK: - Constraints
+    override func viewWillLayoutSubviews() {
+        
+        haveAccountButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 80).isActive = true
+        haveAccountButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        haveAccountButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 150).isActive = true
+        haveAccountButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        textFieldsStackView.topAnchor.constraint(equalTo: haveAccountButton.bottomAnchor, constant: 70).isActive = true
+        textFieldsStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 30).isActive = true
+//        textFieldsStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 30).isActive = true
+        
+      registerButtonsStackView.topAnchor.constraint(equalTo: textFieldsStackView.bottomAnchor, constant: 40).isActive = true
+      registerButtonsStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50).isActive = true
+        registerButtonsStackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+//        registerButtonsStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 60).isActive = true
+        
     }
     
     func configureEmailTextField(textField: UITextField) {
@@ -120,7 +173,7 @@ class LoginAndSignUpViewController: UIViewController {
     @objc private func kbWillShowAction(notification: NSNotification) {
         if self.view.frame.origin.y == 0 {
         if let userInfo = notification.userInfo, let kbFrame = userInfo[UITextField.keyboardFrameEndUserInfoKey] as? CGRect {
-            self.view.frame.origin.y = view.frame.origin.y - kbFrame.height
+            self.view.frame.origin.y = view.frame.origin.y - kbFrame.height / 2
         }
         }
     }
@@ -129,7 +182,7 @@ class LoginAndSignUpViewController: UIViewController {
     @objc private func kbWillHideAction(notification: NSNotification) {
         if self.view.isFirstResponder {
         if let userInfo = notification.userInfo, let kbFrame = userInfo[UITextField.keyboardFrameEndUserInfoKey] as? CGRect {
-            self.view.frame.origin.y = view.frame.origin.y + kbFrame.maxY
+            self.view.frame.origin.y = view.frame.origin.y + kbFrame.maxY / 2
         }
         }
     }
@@ -229,4 +282,57 @@ extension LoginAndSignUpViewController: UITextFieldDelegate {
     }
     
     
+}
+
+extension LoginAndSignUpViewController: LoginButtonDelegate {
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        
+    }
+    
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        if let error = error {
+            debugPrint(error.localizedDescription)
+            return
+        }
+        
+        if let result = result , result.isCancelled {
+            return
+        }
+        
+        guard let accessToken = result?.token?.tokenString else {return}
+        let credential = FacebookAuthProvider.credential(withAccessToken: accessToken)
+        
+        Auth.auth().signIn(with: credential) { [weak self] (FIRresult, error) in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            guard let user = FIRresult?.user else { return }
+            if FIRresult!.additionalUserInfo!.isNewUser {
+                let user = LocalUser(user: user)
+                self?.ref.child(user.id).setValue(["email": user.email])
+            }
+            DispatchQueue.main.async {
+                SceneDelegate.shared.rootViewController.showTasksScreen()
+            }
+//            if let _ = result {
+//                self?.saveFBData()
+//            }
+        }
+        
+    }
+    
+    private func saveFBData() {
+        
+        GraphRequest(graphPath: "me", parameters: ["fields": "id, email"]).start(completionHandler: { [weak self] (_, result, error) in
+             if let userData = result as? [String: Any] {
+                let user = LocalUser(data: userData)
+                let userRef = self?.ref.child(user.id)
+                userRef?.setValue(["email": user.email])
+                DispatchQueue.main.async {
+                    SceneDelegate.shared.rootViewController.showTasksScreen()
+                }
+            }
+        })
+    }
 }
