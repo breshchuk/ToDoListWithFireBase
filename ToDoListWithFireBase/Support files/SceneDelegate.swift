@@ -7,6 +7,7 @@
 
 import UIKit
 import FBSDKCoreKit
+import GoogleSignIn
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -35,6 +36,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                sourceApplication: nil,
                annotation: [UIApplication.OpenURLOptionsKey.annotation]
            )
+        
+        GIDSignIn.sharedInstance()?.handle(url)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

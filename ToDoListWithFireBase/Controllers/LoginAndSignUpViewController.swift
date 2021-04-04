@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import FBSDKLoginKit
+import GoogleSignIn
 
 class LoginAndSignUpViewController: UIViewController {
     
@@ -335,4 +336,12 @@ extension LoginAndSignUpViewController: LoginButtonDelegate {
             }
         })
     }
+}
+
+extension LoginAndSignUpViewController: GIDSignInDelegate {
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        
+    }
+    
+    
 }
