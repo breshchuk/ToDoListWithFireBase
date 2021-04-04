@@ -7,6 +7,8 @@
 
 import UIKit
 import Firebase
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class TasksViewController: UIViewController {
     
@@ -68,6 +70,7 @@ class TasksViewController: UIViewController {
     @objc private func signOutButtonPressed(target: UIBarButtonItem) {
         DispatchQueue.global().async {
             do {
+            LoginManager().logOut()
             try Auth.auth().signOut()
             } catch {
                 print(error.localizedDescription)
