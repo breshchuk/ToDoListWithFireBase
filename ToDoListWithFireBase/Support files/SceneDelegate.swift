@@ -8,6 +8,7 @@
 import UIKit
 import FBSDKCoreKit
 import GoogleSignIn
+import CoreData
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
