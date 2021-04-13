@@ -47,6 +47,15 @@ class LoginAndSignUpViewController: UIViewController {
         let loginButton = GIDSignInButton()
         return loginButton
     }()
+    lazy private var withoutRegButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(withoutRegButtonTapped(sender:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 4
+        button.setTitle("Continue without login", for: .normal)
+        button.setTitleColor(#colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1), for: .normal)
+        return button
+    }()
     
     
     override func viewDidLoad() {
@@ -76,10 +85,6 @@ class LoginAndSignUpViewController: UIViewController {
             view.widthAnchor.constraint(equalToConstant: self.view.bounds.width - 60).isActive = true
         }
         
-        for view in registerButtonsStackView.subviews {
-            view.widthAnchor.constraint(equalToConstant: self.view.bounds.width - 100).isActive = true
-        }
-        
         //MARK: - UI(Text fields)
         configureEmailTextField(textField: emailTextField)
         configurePassTextField(textField: passTextField)
@@ -104,9 +109,16 @@ class LoginAndSignUpViewController: UIViewController {
         haveAccountButton.addTarget(self, action: #selector(haveAccountButtonTapped(sender:)), for: .touchUpInside)
         
         
+        //MARK: - Reg Stack View
         registerButtonsStackView.addArrangedSubview(registerButton)
         registerButtonsStackView.addArrangedSubview(googleButton)
         registerButtonsStackView.addArrangedSubview(fbLoginButton)
+        registerButtonsStackView.addArrangedSubview(withoutRegButton)
+        
+        for view in registerButtonsStackView.subviews {
+            view.widthAnchor.constraint(equalToConstant: self.view.bounds.width - 100).isActive = true
+            view.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        }
         
         //MARK: - Add subviews
         view.addSubview(registrationLabel)
@@ -195,6 +207,7 @@ class LoginAndSignUpViewController: UIViewController {
         }
     }
     
+    //MARK: - Buttons Handlers
     @objc private func registerButtonTapped(sender: UIButton? = nil) {
         if let sender = sender {
             sender.pulsate()
@@ -244,6 +257,7 @@ class LoginAndSignUpViewController: UIViewController {
                         self?.present(successfulAlert, animated: true)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             successfulAlert.dismiss(animated: true)
+                            self?.setProvider(provider: .firebase)
                             SceneDelegate.shared.rootViewController.showTasksScreen()
                         }
                     }
@@ -268,7 +282,16 @@ class LoginAndSignUpViewController: UIViewController {
         self.present(alertController, animated: true)
     }
     
-
+    
+    @objc private func withoutRegButtonTapped(sender: UIButton) {
+        sender.pulsate()
+        setProvider(provider: .withoutProvider)
+        SceneDelegate.shared.rootViewController.showTasksScreen()
+    }
+    
+    private func setProvider(provider: Provider) {
+        UserDefaults.standard.setValue(provider, forKey: "provider")
+    }
 
 }
 
@@ -331,6 +354,7 @@ extension LoginAndSignUpViewController: LoginButtonDelegate {
                 print(error)
             case .success(_):
                 DispatchQueue.main.async {
+                    self.setProvider(provider: .facebook)
                     SceneDelegate.shared.rootViewController.showTasksScreen()
                 }
             }
@@ -371,6 +395,7 @@ extension LoginAndSignUpViewController: GIDSignInDelegate {
                 print(error)
             case .success(_):
                 DispatchQueue.main.async {
+                    self.setProvider(provider: .google)
                     SceneDelegate.shared.rootViewController.showTasksScreen()
                 }
             }

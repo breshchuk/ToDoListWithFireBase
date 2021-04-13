@@ -18,11 +18,16 @@ class SplashScreenViewController: UIViewController {
         activityIndicator.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         activityIndicator.backgroundColor = UIColor(white: 0, alpha: 0.4)
         view.addSubview(activityIndicator)
-        loadDataFromFirebase()
+        loadData()
     }
     
-    func loadDataFromFirebase() {
+    func loadData() {
         activityIndicator.startAnimating()
+
+          if let provider = UserDefaults.standard.value(forKey: "provider") as? Provider,
+             provider == .withoutProvider {
+              SceneDelegate.shared.rootViewController.showTasksScreen()
+          }
         
         if Auth.auth().currentUser != nil {
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) { [weak self] in
