@@ -24,6 +24,8 @@
 		F217E1E825F16CAF002EDA0D /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1E725F16CAF002EDA0D /* TasksViewController.swift */; };
 		F217E1EB25F16CD4002EDA0D /* LocalUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1EA25F16CD4002EDA0D /* LocalUser.swift */; };
 		F217E1F525F16D4C002EDA0D /* Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F217E1F425F16D4C002EDA0D /* Tasks.swift */; };
+		F22F56082625EAFE0028FF2E /* CoreDataTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22F56062625EAFE0028FF2E /* CoreDataTask+CoreDataClass.swift */; };
+		F22F56092625EAFE0028FF2E /* CoreDataTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22F56072625EAFE0028FF2E /* CoreDataTask+CoreDataProperties.swift */; };
 		F23120D62618EAD10019FB7A /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = F23120D52618EAD10019FB7A /* FacebookCore */; };
 		F23120D82618EAD10019FB7A /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = F23120D72618EAD10019FB7A /* FacebookLogin */; };
 		F237B94D261DA90200AD44C9 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F237B94B261DA90200AD44C9 /* CoreDataModel.xcdatamodeld */; };
@@ -50,6 +52,8 @@
 		F217E1E725F16CAF002EDA0D /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		F217E1EA25F16CD4002EDA0D /* LocalUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUser.swift; sourceTree = "<group>"; };
 		F217E1F425F16D4C002EDA0D /* Tasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasks.swift; sourceTree = "<group>"; };
+		F22F56062625EAFE0028FF2E /* CoreDataTask+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataTask+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F22F56072625EAFE0028FF2E /* CoreDataTask+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F237B94C261DA90200AD44C9 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		F237B950261DAB6800AD44C9 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		F29F50B42619FA07003321A5 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 		F217E1F125F16D10002EDA0D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F22F56062625EAFE0028FF2E /* CoreDataTask+CoreDataClass.swift */,
+				F22F56072625EAFE0028FF2E /* CoreDataTask+CoreDataProperties.swift */,
 				F237B94F261DAB5500AD44C9 /* Provider */,
 				F217E1EA25F16CD4002EDA0D /* LocalUser.swift */,
 				F217E1F425F16D4C002EDA0D /* Tasks.swift */,
@@ -311,12 +317,14 @@
 			files = (
 				F2125D3D25EFAF5700660D65 /* RootViewController.swift in Sources */,
 				F29F50B52619FA07003321A5 /* UserViewController.swift in Sources */,
+				F22F56082625EAFE0028FF2E /* CoreDataTask+CoreDataClass.swift in Sources */,
 				F237B94D261DA90200AD44C9 /* CoreDataModel.xcdatamodeld in Sources */,
 				F29F50B82619FFAF003321A5 /* TabBarViewController.swift in Sources */,
 				F2125D3925EFAF5700660D65 /* AppDelegate.swift in Sources */,
 				F217E1D925F152B1002EDA0D /* SplashScreenViewController.swift in Sources */,
 				F217E1E825F16CAF002EDA0D /* TasksViewController.swift in Sources */,
 				F217E1F525F16D4C002EDA0D /* Tasks.swift in Sources */,
+				F22F56092625EAFE0028FF2E /* CoreDataTask+CoreDataProperties.swift in Sources */,
 				F217E1EB25F16CD4002EDA0D /* LocalUser.swift in Sources */,
 				F237B951261DAB6800AD44C9 /* Provider.swift in Sources */,
 				F217E1DC25F15523002EDA0D /* LoginAndSignUpViewController.swift in Sources */,
